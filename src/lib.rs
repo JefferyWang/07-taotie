@@ -79,13 +79,8 @@ impl ReplContext {
             eprintln!("Repl Send Error: {}", e);
             std::process::exit(1);
         }
-        match rx.recv() {
-            Ok(data) => Some(data),
-            Err(e) => {
-                eprintln!("Repl Recv Error: {}", e);
-                std::process::exit(1);
-            }
-        }
+        // if the oneshot receiver is dropped,return None, because had an error on the command
+        rx.recv().ok()
     }
 }
 

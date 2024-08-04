@@ -92,6 +92,7 @@ fn verify_conn_str(s: &str) -> Result<DatasetConn, String> {
                 ext: ext1.to_string(),
                 compression: FileCompressionType::UNCOMPRESSED,
             })),
+            "parquet" => Ok(DatasetConn::Parquet(s.to_string())),
             v => Err(format!("Unsupported file type: {}", v)),
         },
         _ => Err(format!("Invalid connection string: {}", s)),
